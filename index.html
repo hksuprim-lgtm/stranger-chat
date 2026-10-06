@@ -1,373 +1,864 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stranger Chat</title>
 
-  <title>Stranger Chat</title>
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top,#28204d 0%,#11111d 45%,#08080f 100%);
+  color:white;
+  display:flex;
+  justify-content:center;
+  padding:20px 12px;
+}
 
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top, #25254a 0%, #0d0d16 45%, #050509 100%);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+.app{
+  width:100%;
+  max-width:520px;
+  min-height:90vh;
+  background:rgba(18,18,30,.96);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
 
-    .app {
-      width: 100%;
-      max-width: 430px;
-      min-height: 700px;
-      background: rgba(20, 20, 32, 0.96);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 28px;
-      padding: 28px 22px;
-      box-shadow: 0 25px 80px rgba(0,0,0,0.6);
-      text-align: center;
-    }
+/* HEADER */
 
-    .logo {
-      width: 75px;
-      height: 75px;
-      margin: 15px auto 20px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #7c3aed, #ec4899);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 34px;
-      box-shadow: 0 10px 35px rgba(168,85,247,0.35);
-    }
+.header{
+  padding:22px;
+  text-align:center;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
 
-    h1 {
-      font-size: 34px;
-      margin-bottom: 8px;
-    }
+.logo{
+  width:75px;
+  height:75px;
+  margin:auto;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:38px;
+  background:linear-gradient(135deg,#813cff,#f02f9b);
+  box-shadow:0 0 35px rgba(175,50,255,.45);
+}
 
-    .gradient {
-      background: linear-gradient(90deg, #a78bfa, #f472b6);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
+.title{
+  margin-top:16px;
+  font-size:30px;
+  font-weight:800;
+  background:linear-gradient(90deg,#9b6cff,#ff55a9);
+  -webkit-background-clip:text;
+  color:transparent;
+}
 
-    .subtitle {
-      color: #aaaabd;
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 35px;
-    }
+.subtitle{
+  margin-top:7px;
+  color:#aaaabd;
+  font-size:15px;
+}
 
-    .status {
-      background: rgba(34,197,94,0.08);
-      border: 1px solid rgba(34,197,94,0.2);
-      color: #86efac;
-      border-radius: 14px;
-      padding: 13px;
-      margin-bottom: 25px;
-      font-size: 14px;
-    }
+/* PAGES */
 
-    .main-button {
-      width: 100%;
-      border: none;
-      border-radius: 16px;
-      padding: 17px;
-      font-size: 17px;
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
-      background: linear-gradient(135deg, #7c3aed, #ec4899);
-      box-shadow: 0 12px 30px rgba(168,85,247,0.3);
-      transition: 0.2s;
-    }
+.page{
+  display:none;
+  padding:24px;
+}
 
-    .main-button:active {
-      transform: scale(0.97);
-    }
+.page.active{
+  display:block;
+}
 
-    .features {
-      margin-top: 35px;
-      display: grid;
-      gap: 12px;
-    }
+/* PROFILE */
 
-    .feature {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      text-align: left;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
-      padding: 15px;
-      border-radius: 15px;
-    }
+.section-title{
+  font-size:24px;
+  font-weight:800;
+  margin-bottom:8px;
+}
 
-    .icon {
-      font-size: 24px;
-    }
+.section-subtitle{
+  color:#9999aa;
+  margin-bottom:25px;
+}
 
-    .feature strong {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 14px;
-    }
+.photo-box{
+  width:125px;
+  height:125px;
+  border-radius:50%;
+  margin:0 auto 12px;
+  overflow:hidden;
+  border:3px solid #9c4dff;
+  background:#202030;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:50px;
+}
 
-    .feature span {
-      color: #9999aa;
-      font-size: 12px;
-    }
+.photo-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
-    .footer {
-      margin-top: 35px;
-      color: #777789;
-      font-size: 11px;
-      line-height: 1.5;
-    }
+.photo-button{
+  display:block;
+  width:max-content;
+  margin:0 auto 25px;
+  padding:10px 18px;
+  border-radius:12px;
+  background:#29283b;
+  color:white;
+  border:1px solid #44435b;
+  cursor:pointer;
+}
 
-    .chat {
-      display: none;
-      margin-top: 25px;
-    }
+input[type="file"]{
+  display:none;
+}
 
-    .chat-box {
-      height: 330px;
-      background: #0b0b12;
-      border-radius: 18px;
-      padding: 15px;
-      text-align: left;
-      overflow-y: auto;
-      border: 1px solid rgba(255,255,255,0.07);
-    }
+label{
+  color:#ddd;
+  font-size:14px;
+}
 
-    .message {
-      background: #252538;
-      padding: 10px 13px;
-      border-radius: 13px;
-      margin-bottom: 10px;
-      width: fit-content;
-      max-width: 85%;
-      font-size: 14px;
-    }
+.input{
+  width:100%;
+  margin-top:8px;
+  margin-bottom:20px;
+  padding:15px;
+  border:none;
+  outline:none;
+  border-radius:14px;
+  background:#20202d;
+  color:white;
+  font-size:16px;
+  border:1px solid #343446;
+}
 
-    .stranger {
-      color: #ddd;
-    }
+.gender-title{
+  margin-bottom:10px;
+  font-weight:bold;
+}
 
-    .you {
-      margin-left: auto;
-      background: linear-gradient(135deg, #6d28d9, #be185d);
-    }
+.gender-options{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-bottom:24px;
+}
 
-    .chat-input {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
+.gender-option{
+  padding:15px 5px;
+  text-align:center;
+  border-radius:14px;
+  background:#20202d;
+  border:1px solid #343446;
+  cursor:pointer;
+  color:#aaaabd;
+}
 
-    .chat-input input {
-      flex: 1;
-      background: #151521;
-      color: white;
-      border: 1px solid #303044;
-      border-radius: 12px;
-      padding: 13px;
-      outline: none;
-    }
+.gender-option.selected{
+  background:linear-gradient(135deg,#7438e8,#d8349a);
+  border-color:#c55aff;
+  color:white;
+}
 
-    .send {
-      border: none;
-      border-radius: 12px;
-      padding: 0 18px;
-      background: #7c3aed;
-      color: white;
-      font-weight: bold;
-    }
+.gender-option span{
+  display:block;
+  font-size:27px;
+  margin-bottom:5px;
+}
 
-    .next {
-      width: 100%;
-      margin-top: 12px;
-      padding: 13px;
-      border-radius: 12px;
-      border: 1px solid #3b3b52;
-      background: transparent;
-      color: #ddd;
-    }
-  </style>
+/* BUTTONS */
+
+.main-btn{
+  width:100%;
+  padding:17px;
+  border:none;
+  border-radius:17px;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  background:linear-gradient(100deg,#7d38ed,#e93699);
+  box-shadow:0 10px 30px rgba(190,45,230,.25);
+  cursor:pointer;
+}
+
+.main-btn:active{
+  transform:scale(.98);
+}
+
+.small-btn{
+  padding:11px 15px;
+  border-radius:12px;
+  border:1px solid #3b3a4d;
+  background:#20202d;
+  color:white;
+  cursor:pointer;
+}
+
+/* CHAT */
+
+.profile-bar{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:15px;
+  background:#1b1b29;
+  border-radius:18px;
+  margin-bottom:15px;
+}
+
+.stranger-photo{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  object-fit:cover;
+  background:#303044;
+  border:2px solid #9d4cff;
+}
+
+.stranger-name{
+  font-size:17px;
+  font-weight:bold;
+}
+
+.online{
+  color:#62e899;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.messages{
+  height:430px;
+  overflow-y:auto;
+  padding:15px;
+  background:#0e0e17;
+  border-radius:18px;
+  margin-bottom:12px;
+}
+
+.message{
+  max-width:78%;
+  padding:11px 14px;
+  margin-bottom:10px;
+  border-radius:16px;
+  font-size:15px;
+  line-height:1.4;
+}
+
+.received{
+  background:#252535;
+  border-bottom-left-radius:5px;
+}
+
+.sent{
+  background:linear-gradient(135deg,#7038df,#d93699);
+  margin-left:auto;
+  border-bottom-right-radius:5px;
+}
+
+.chat-input-row{
+  display:flex;
+  gap:8px;
+}
+
+.chat-input{
+  flex:1;
+  min-width:0;
+  padding:14px;
+  border:none;
+  outline:none;
+  border-radius:14px;
+  background:#20202d;
+  color:white;
+  border:1px solid #343446;
+}
+
+.send-btn{
+  width:75px;
+  border:none;
+  border-radius:14px;
+  background:#7939e8;
+  color:white;
+  font-weight:bold;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.actions button{
+  flex:1;
+}
+
+.block{
+  color:#ff7070;
+}
+
+.report{
+  color:#ffbd5c;
+}
+
+/* HOME */
+
+.anonymous{
+  text-align:center;
+  padding:15px;
+  border-radius:16px;
+  background:rgba(30,150,105,.10);
+  border:1px solid rgba(50,220,160,.2);
+  color:#75e6a8;
+  margin-bottom:25px;
+}
+
+.features{
+  margin-top:25px;
+}
+
+.feature{
+  padding:18px;
+  margin-bottom:12px;
+  border-radius:18px;
+  background:#1c1c29;
+  border:1px solid #292938;
+}
+
+.feature-icon{
+  font-size:28px;
+  float:left;
+  margin-right:14px;
+}
+
+.feature strong{
+  display:block;
+  font-size:16px;
+  margin-bottom:5px;
+}
+
+.feature small{
+  color:#9999aa;
+}
+
+.footer{
+  text-align:center;
+  padding:20px;
+  color:#707080;
+  font-size:12px;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="app">
+<div class="app">
 
-    <div class="logo">💬</div>
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">💬</div>
+  <div class="title">Stranger Chat</div>
+  <div class="subtitle">Talk to someone new. Stay anonymous.</div>
+</div>
 
-    <h1>
-      <span class="gradient">Stranger Chat</span>
-    </h1>
 
-    <p class="subtitle">
-      Talk to someone new.<br>
-      No phone number. No personal details.
-    </p>
+<!-- HOME PAGE -->
+<div id="homePage" class="page active">
 
-    <div class="status">
-      🟢 Anonymous mode is ON
+  <div class="anonymous">
+    🟢 Anonymous mode is ON
+  </div>
+
+  <button class="main-btn" onclick="openProfile()">
+    🎲 Talk to a Stranger
+  </button>
+
+  <div class="features">
+
+    <div class="feature">
+      <div class="feature-icon">🔒</div>
+      <strong>Stay Anonymous</strong>
+      <small>No phone number required</small>
     </div>
 
-    <button class="main-button" onclick="startChat()">
-      🎲 Talk to a Stranger
-    </button>
-
-    <div class="features">
-
-      <div class="feature">
-        <div class="icon">🔒</div>
-        <div>
-          <strong>Stay Anonymous</strong>
-          <span>No phone number required</span>
-        </div>
-      </div>
-
-      <div class="feature">
-        <div class="icon">⚡</div>
-        <div>
-          <strong>Random Matching</strong>
-          <span>Meet someone new instantly</span>
-        </div>
-      </div>
-
-      <div class="feature">
-        <div class="icon">🛡️</div>
-        <div>
-          <strong>Block & Report</strong>
-          <span>Tools to keep conversations safer</span>
-        </div>
-      </div>
-
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <strong>Random Matching</strong>
+      <small>Meet someone new instantly</small>
     </div>
 
-    <div class="chat" id="chat">
-
-      <div class="chat-box" id="messages">
-
-        <div class="message stranger">
-          👋 Hey! You are connected with a stranger.
-        </div>
-
-        <div class="message stranger">
-          Say hello!
-        </div>
-
-      </div>
-
-      <div class="chat-input">
-        <input
-          id="messageInput"
-          type="text"
-          placeholder="Type a message..."
-          onkeydown="handleEnter(event)"
-        >
-
-        <button class="send" onclick="sendMessage()">
-          Send
-        </button>
-      </div>
-
-      <button class="next" onclick="nextStranger()">
-        🔄 Find Next Stranger
-      </button>
-
-    </div>
-
-    <div class="footer">
-      By using Stranger Chat, you agree to our Terms & Privacy Policy.<br>
-      Please do not share passwords, financial information or personal details.
+    <div class="feature">
+      <div class="feature-icon">🛡️</div>
+      <strong>Block & Report</strong>
+      <small>Tools to keep conversations safer</small>
     </div>
 
   </div>
 
-  <script>
+</div>
 
-    function startChat() {
 
-      document.querySelector(".main-button").style.display = "none";
-      document.querySelector(".features").style.display = "none";
+<!-- PROFILE PAGE -->
+<div id="profilePage" class="page">
 
-      document.getElementById("chat").style.display = "block";
+  <div class="section-title">
+    Create your profile
+  </div>
 
-      setTimeout(function() {
-        alert("🎉 Demo connection created! Real stranger matching will be connected with our backend next.");
-      }, 300);
+  <div class="section-subtitle">
+    Choose how you want to appear to strangers.
+  </div>
 
+  <div class="photo-box" id="photoPreview">
+    👤
+  </div>
+
+  <label for="photoInput" class="photo-button">
+    📸 Add Profile Photo
+  </label>
+
+  <input
+    type="file"
+    id="photoInput"
+    accept="image/*"
+    onchange="previewPhoto(event)"
+  >
+
+  <label>
+    Nickname
+  </label>
+
+  <input
+    class="input"
+    id="nickname"
+    type="text"
+    maxlength="20"
+    placeholder="Enter your nickname"
+  >
+
+  <div class="gender-title">
+    Gender
+  </div>
+
+  <div class="gender-options">
+
+    <div
+      class="gender-option"
+      onclick="selectGender(this,'Male')"
+    >
+      <span>👨</span>
+      Male
+    </div>
+
+    <div
+      class="gender-option"
+      onclick="selectGender(this,'Female')"
+    >
+      <span>👩</span>
+      Female
+    </div>
+
+    <div
+      class="gender-option"
+      onclick="selectGender(this,'Other')"
+    >
+      <span>🧑</span>
+      Other
+    </div>
+
+  </div>
+
+  <button class="main-btn" onclick="startChat()">
+    🎲 Find a Stranger
+  </button>
+
+  <br><br>
+
+  <button
+    class="small-btn"
+    style="width:100%"
+    onclick="showPage('homePage')"
+  >
+    ← Back
+  </button>
+
+</div>
+
+
+<!-- CHAT PAGE -->
+<div id="chatPage" class="page">
+
+  <div class="profile-bar">
+
+    <img
+      id="strangerPhoto"
+      class="stranger-photo"
+      src=""
+      alt="Stranger"
+    >
+
+    <div style="flex:1">
+      <div class="stranger-name" id="strangerName">
+        Stranger
+      </div>
+
+      <div class="online" id="strangerGender">
+        🟢 Online
+      </div>
+    </div>
+
+    <button
+      class="small-btn"
+      onclick="nextStranger()"
+    >
+      Next →
+    </button>
+
+  </div>
+
+
+  <div class="messages" id="messages">
+
+    <div class="message received">
+      👋 Hey! You are connected with a stranger.
+    </div>
+
+    <div class="message received">
+      Remember: don't share passwords, OTPs or sensitive personal information.
+    </div>
+
+  </div>
+
+
+  <div class="chat-input-row">
+
+    <input
+      id="messageInput"
+      class="chat-input"
+      placeholder="Type a message..."
+      onkeydown="handleEnter(event)"
+    >
+
+    <button
+      class="send-btn"
+      onclick="sendMessage()"
+    >
+      Send
+    </button>
+
+  </div>
+
+
+  <div class="actions">
+
+    <button
+      class="small-btn block"
+      onclick="blockUser()"
+    >
+      🚫 Block
+    </button>
+
+    <button
+      class="small-btn report"
+      onclick="reportUser()"
+    >
+      ⚠️ Report
+    </button>
+
+  </div>
+
+</div>
+
+
+<div class="footer">
+  By using Stranger Chat, you agree to our Terms & Privacy Policy.
+</div>
+
+</div>
+
+
+<script>
+
+let selectedGender = "";
+let selectedPhoto = "";
+
+
+/* PAGE SWITCH */
+
+function showPage(pageId){
+
+  document.querySelectorAll(".page").forEach(page=>{
+    page.classList.remove("active");
+  });
+
+  document.getElementById(pageId).classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* OPEN PROFILE */
+
+function openProfile(){
+  showPage("profilePage");
+}
+
+
+/* PHOTO PREVIEW */
+
+function previewPhoto(event){
+
+  const file = event.target.files[0];
+
+  if(!file) return;
+
+  if(file.size > 5 * 1024 * 1024){
+    alert("Photo 5MB se chhoti rakho.");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    selectedPhoto = e.target.result;
+
+    document.getElementById("photoPreview").innerHTML =
+      `<img src="${selectedPhoto}" alt="Profile">`;
+
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
+/* GENDER */
+
+function selectGender(element, gender){
+
+  document.querySelectorAll(".gender-option")
+    .forEach(option=>{
+      option.classList.remove("selected");
+    });
+
+  element.classList.add("selected");
+
+  selectedGender = gender;
+}
+
+
+/* START CHAT */
+
+function startChat(){
+
+  const nickname =
+    document.getElementById("nickname").value.trim();
+
+  if(!nickname){
+    alert("Pehle nickname enter karo bhai ❤️");
+    return;
+  }
+
+  if(!selectedGender){
+    alert("Apna gender select karo.");
+    return;
+  }
+
+  /*
+    DEMO:
+    Abhi real stranger backend nahi laga hai.
+    Isliye demo stranger profile show ho rahi hai.
+  */
+
+  const demoStrangers = [
+
+    {
+      name:"Anonymous Girl",
+      gender:"Female",
+      photo:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300"
+    },
+
+    {
+      name:"Anonymous Boy",
+      gender:"Male",
+      photo:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300"
     }
 
-    function sendMessage() {
+  ];
 
-      const input = document.getElementById("messageInput");
-      const text = input.value.trim();
+  const stranger =
+    demoStrangers[
+      Math.floor(Math.random()*demoStrangers.length)
+    ];
 
-      if (text === "") return;
+  document.getElementById("strangerName")
+    .textContent = stranger.name;
 
-      const message = document.createElement("div");
+  document.getElementById("strangerGender")
+    .textContent =
+      stranger.gender === "Female"
+      ? "👩 Female • 🟢 Online"
+      : "👨 Male • 🟢 Online";
 
-      message.className = "message you";
-      message.textContent = text;
+  document.getElementById("strangerPhoto")
+    .src = stranger.photo;
 
-      document.getElementById("messages").appendChild(message);
+  document.getElementById("messages").innerHTML = `
+    <div class="message received">
+      👋 Hey ${nickname}! You are connected with a stranger.
+    </div>
 
-      input.value = "";
+    <div class="message received">
+      ${stranger.gender === "Female" ? "👩" : "👨"} ${stranger.gender}
+    </div>
+  `;
 
-      const box = document.getElementById("messages");
-      box.scrollTop = box.scrollHeight;
+  showPage("chatPage");
+}
 
-    }
 
-    function handleEnter(event) {
+/* SEND MESSAGE */
 
-      if (event.key === "Enter") {
-        sendMessage();
-      }
+function sendMessage(){
 
-    }
+  const input =
+    document.getElementById("messageInput");
 
-    function nextStranger() {
+  const text = input.value.trim();
 
-      const box = document.getElementById("messages");
+  if(!text) return;
 
-      box.innerHTML = `
-        <div class="message stranger">
-          🔎 Finding another stranger...
-        </div>
-      `;
+  const messages =
+    document.getElementById("messages");
 
-      setTimeout(function() {
+  const message =
+    document.createElement("div");
 
-        box.innerHTML = `
-          <div class="message stranger">
-            🟢 You are connected with a new stranger!
-          </div>
+  message.className = "message sent";
 
-          <div class="message stranger">
-            👋 Hey there!
-          </div>
-        `;
+  message.textContent = text;
 
-      }, 1200);
+  messages.appendChild(message);
 
-    }
+  input.value = "";
 
-  </script>
+  messages.scrollTop = messages.scrollHeight;
+
+
+  /*
+    DEMO AUTO REPLY
+  */
+
+  setTimeout(()=>{
+
+    const reply =
+      document.createElement("div");
+
+    reply.className = "message received";
+
+    reply.textContent =
+      "😊 Nice! This is a demo reply. Real stranger chat backend next.";
+
+    messages.appendChild(reply);
+
+    messages.scrollTop = messages.scrollHeight;
+
+  },1000);
+}
+
+
+/* ENTER KEY */
+
+function handleEnter(event){
+
+  if(event.key === "Enter"){
+    sendMessage();
+  }
+
+}
+
+
+/* NEXT STRANGER */
+
+function nextStranger(){
+
+  const confirmNext =
+    confirm("Current stranger ko chhodkar next stranger se connect karein?");
+
+  if(!confirmNext) return;
+
+  startChat();
+}
+
+
+/* BLOCK */
+
+function blockUser(){
+
+  alert(
+    "🚫 Stranger blocked.\n\nReal backend mein is user ko dobara match nahi kiya jayega."
+  );
+
+  showPage("homePage");
+}
+function reportUser(){
+
+  const reason = prompt(
+    "Report reason likho:\n\n" +
+    "1. Abuse / Harassment\n" +
+    "2. Fake Profile\n" +
+    "3. Spam / Scam\n" +
+    "4. Inappropriate Content"
+  );
+
+  if(!reason) return;
+
+  alert("⚠️ Report submitted successfully.");
+
+  showPage("homePage");
+}
+
+</script>
+
+</body>
+</html>
+
+/* REPORT */
+
+function reportUser(){
+
+  const reason =
+    prompt(
+      "Report reason likho:\n\n1. Abuse\n2. Spam\n3. Harassment\n4. Other"
+    );
+
+  if(!reason) return;
+
+  alert(
+    "⚠️ Report submitted.\n\nThank you. Our moderation team can review this report."
+  );
+
+}
+
+</script>
 
 </body>
 </html>
