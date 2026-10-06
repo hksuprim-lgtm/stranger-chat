@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Stranger Chat</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, #25254a 0%, #0d0d16 45%, #050509 100%);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 700px;
+      background: rgba(20, 20, 32, 0.96);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 28px;
+      padding: 28px 22px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+
+    .logo {
+      width: 75px;
+      height: 75px;
+      margin: 15px auto 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 34px;
+      box-shadow: 0 10px 35px rgba(168,85,247,0.35);
+    }
+
+    h1 {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg, #a78bfa, #f472b6);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      color: #aaaabd;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 35px;
+    }
+
+    .status {
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.2);
+      color: #86efac;
+      border-radius: 14px;
+      padding: 13px;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+
+    .main-button {
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      padding: 17px;
+      font-size: 17px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      box-shadow: 0 12px 30px rgba(168,85,247,0.3);
+      transition: 0.2s;
+    }
+
+    .main-button:active {
+      transform: scale(0.97);
+    }
+
+    .features {
+      margin-top: 35px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-align: left;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 15px;
+      border-radius: 15px;
+    }
+
+    .icon {
+      font-size: 24px;
+    }
+
+    .feature strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .feature span {
+      color: #9999aa;
+      font-size: 12px;
+    }
+
+    .footer {
+      margin-top: 35px;
+      color: #777789;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .chat {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .chat-box {
+      height: 330px;
+      background: #0b0b12;
+      border-radius: 18px;
+      padding: 15px;
+      text-align: left;
+      overflow-y: auto;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .message {
+      background: #252538;
+      padding: 10px 13px;
+      border-radius: 13px;
+      margin-bottom: 10px;
+      width: fit-content;
+      max-width: 85%;
+      font-size: 14px;
+    }
+
+    .stranger {
+      color: #ddd;
+    }
+
+    .you {
+      margin-left: auto;
+      background: linear-gradient(135deg, #6d28d9, #be185d);
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      background: #151521;
+      color: white;
+      border: 1px solid #303044;
+      border-radius: 12px;
+      padding: 13px;
+      outline: none;
+    }
+
+    .send {
+      border: none;
+      border-radius: 12px;
+      padding: 0 18px;
+      background: #7c3aed;
+      color: white;
+      font-weight: bold;
+    }
+
+    .next {
+      width: 100%;
+      margin-top: 12px;
+      padding: 13px;
+      border-radius: 12px;
+      border: 1px solid #3b3b52;
+      background: transparent;
+      color: #ddd;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <div class="logo">💬</div>
+
+    <h1>
+      <span class="gradient">Stranger Chat</span>
+    </h1>
+
+    <p class="subtitle">
+      Talk to someone new.<br>
+      No phone number. No personal details.
+    </p>
+
+    <div class="status">
+      🟢 Anonymous mode is ON
+    </div>
+
+    <button class="main-button" onclick="startChat()">
+      🎲 Talk to a Stranger
+    </button>
+
+    <div class="features">
+
+      <div class="feature">
+        <div class="icon">🔒</div>
+        <div>
+          <strong>Stay Anonymous</strong>
+          <span>No phone number required</span>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="icon">⚡</div>
+        <div>
+          <strong>Random Matching</strong>
+          <span>Meet someone new instantly</span>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="icon">🛡️</div>
+        <div>
+          <strong>Block & Report</strong>
+          <span>Tools to keep conversations safer</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="chat" id="chat">
+
+      <div class="chat-box" id="messages">
+
+        <div class="message stranger">
+          👋 Hey! You are connected with a stranger.
+        </div>
+
+        <div class="message stranger">
+          Say hello!
+        </div>
+
+      </div>
+
+      <div class="chat-input">
+        <input
+          id="messageInput"
+          type="text"
+          placeholder="Type a message..."
+          onkeydown="handleEnter(event)"
+        >
+
+        <button class="send" onclick="sendMessage()">
+          Send
+        </button>
+      </div>
+
+      <button class="next" onclick="nextStranger()">
+        🔄 Find Next Stranger
+      </button>
+
+    </div>
+
+    <div class="footer">
+      By using Stranger Chat, you agree to our Terms & Privacy Policy.<br>
+      Please do not share passwords, financial information or personal details.
+    </div>
+
+  </div>
+
+  <script>
+
+    function startChat() {
+
+      document.querySelector(".main-button").style.display = "none";
+      document.querySelector(".features").style.display = "none";
+
+      document.getElementById("chat").style.display = "block";
+
+      setTimeout(function() {
+        alert("🎉 Demo connection created! Real stranger matching will be connected with our backend next.");
+      }, 300);
+
+    }
+
+    function sendMessage() {
+
+      const input = document.getElementById("messageInput");
+      const text = input.value.trim();
+
+      if (text === "") return;
+
+      const message = document.createElement("div");
+
+      message.className = "message you";
+      message.textContent = text;
+
+      document.getElementById("messages").appendChild(message);
+
+      input.value = "";
+
+      const box = document.getElementById("messages");
+      box.scrollTop = box.scrollHeight;
+
+    }
+
+    function handleEnter(event) {
+
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+
+    }
+
+    function nextStranger() {
+
+      const box = document.getElementById("messages");
+
+      box.innerHTML = `
+        <div class="message stranger">
+          🔎 Finding another stranger...
+        </div>
+      `;
+
+      setTimeout(function() {
+
+        box.innerHTML = `
+          <div class="message stranger">
+            🟢 You are connected with a new stranger!
+          </div>
+
+          <div class="message stranger">
+            👋 Hey there!
+          </div>
+        `;
+
+      }, 1200);
+
+    }
+
+  </script>
+
+</body>
+</html>
